@@ -5,6 +5,8 @@ import 'package:task/models/model.dart';
 import 'package:task/screens/thirdpage.dart';
 import 'package:task/utilit/utilt.dart';
 
+import 'thirdpage.dart';
+
 class SecondPage extends StatefulWidget {
   @override
   _SecondPageState createState() => _SecondPageState();
@@ -50,8 +52,7 @@ class _SecondPageState extends State<SecondPage> {
                   crossAxisCount: 4,
                   itemCount: info.length,
                   itemBuilder: (BuildContext context, int index) =>
-                      customgridview(context,
-                           index,  info[index]),
+                      customgridview(context, index, info[index]),
                   staggeredTileBuilder: (int index) =>
                       new StaggeredTile.count(2, 3),
                   mainAxisSpacing: 8,
@@ -74,11 +75,16 @@ class _SecondPageState extends State<SecondPage> {
   }
 }
 
-Widget customgridview(context,index,HomeApi inf)
-{
+Widget customgridview(context, index, HomeApi inf) {
   return (index % 2 != 1)
-        ? Transform.translate(
-            offset: Offset(0, 60),
+      ? Transform.translate(
+          offset: Offset(0, 60),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ThirdPage(inf.key);
+              }));
+            },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
               child: Card(
@@ -90,18 +96,7 @@ Widget customgridview(context,index,HomeApi inf)
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Flexible(
-                      child: Container(
-                        
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                              image: 
-                               (inf.image== null)
-                                  ? Container()
-                                  : NetworkImage(inf.image),
-                              fit: BoxFit.cover),
-                        ),
-                      ),
+                      child: Image.network(inf.image),
                     ),
                     Card(
                       elevation: 0,
@@ -125,8 +120,15 @@ Widget customgridview(context,index,HomeApi inf)
                 ),
               ),
             ),
-          )
-        : Padding(
+          ),
+        )
+      : GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ThirdPage(inf.key);
+            }));
+          },
+          child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
             child: Card(
               shape: RoundedRectangleBorder(
@@ -141,7 +143,7 @@ Widget customgridview(context,index,HomeApi inf)
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
-                            image: (inf.image== null)
+                            image: (inf.image == null)
                                 ? Container()
                                 : NetworkImage(inf.image),
                             fit: BoxFit.cover),
@@ -169,18 +171,18 @@ Widget customgridview(context,index,HomeApi inf)
                 ],
               ),
             ),
-          );
+          ),
+        );
 }
 
-  // Widget checkUrl(HomeApi inff) {
-  //   try {
-  //     return Image.network(inf.image,
-  //         height: 70.0, width: 70.0, fit: BoxFit.cover);
-  //   } catch (e) {
-  //     return Icon(Icons.image);
-  //   }
-  // }
+// Widget checkUrl(HomeApi inff) {
+//   try {
+//     return Image.network(inf.image,
+//         height: 70.0, width: 70.0, fit: BoxFit.cover);
+//   } catch (e) {
+//     return Icon(Icons.image);
+//   }
+// }
 
-
-   // Navigator.of(context)
-                        //     .pushNamed(ThirdPage.id, arguments: inf.key);
+// Navigator.of(context)
+//     .pushNamed(ThirdPage.id, arguments: inf.key);

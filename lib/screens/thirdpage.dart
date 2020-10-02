@@ -4,9 +4,8 @@ import 'package:task/models/model.dart';
 import 'package:task/utilit/utilt.dart';
 
 class ThirdPage extends StatefulWidget {
-  static String id = 'ThirdPage';
-  // HomeInfo infoo;
-  // ThirdPage(this.infoo);
+  final int cityId;
+  ThirdPage(this.cityId);
   @override
   _ThirdPageState createState() => _ThirdPageState();
 }
@@ -32,9 +31,14 @@ class _ThirdPageState extends State<ThirdPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
-            child: Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           )
         ],
@@ -46,7 +50,7 @@ class _ThirdPageState extends State<ThirdPage> {
       ),
       body: FutureBuilder(
         // manual id to get data refer to this id
-        future: cityData.governoratedata(1),
+        future: cityData.governoratedata(widget.cityId),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.active:
@@ -54,10 +58,11 @@ class _ThirdPageState extends State<ThirdPage> {
               break;
             case ConnectionState.done:
               if (snapshot.hasError) {
+                print('erroro : ' + snapshot.error.toString());
                 return connectionerror();
               } else {
-                List<Governorate> gov = snapshot.data;
-                return _listview(gov[1]);
+                List<Cities> gov = snapshot.data;
+                return _listview(gov);
               }
 
               break;
@@ -75,7 +80,7 @@ class _ThirdPageState extends State<ThirdPage> {
     );
   }
 
-  Widget _listview(Governorate governorate) {
+  Widget _listview(List<Cities> governorate) {
     return ListView.builder(
         itemBuilder: (context, index) {
           return Stack(
@@ -89,7 +94,7 @@ class _ThirdPageState extends State<ThirdPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                        image: ExactAssetImage(governorate.cities[index].image),
+                        image: ExactAssetImage(governorate[index].image),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -141,7 +146,7 @@ class _ThirdPageState extends State<ThirdPage> {
                               ),
                             ),
                             Text(
-                              governorate.cities[index].name,
+                              governorate[index].name,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -157,6 +162,6 @@ class _ThirdPageState extends State<ThirdPage> {
             ],
           );
         },
-        itemCount: governorate.cities.length);
+        itemCount: governorate.length);
   }
 }

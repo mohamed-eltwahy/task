@@ -12,6 +12,7 @@ class HomeInfo {
       var jsondata = jsonDecode(response.body);
       var data = jsondata['data']['governorates']['data'];
       for (var items in data) {
+        print('image : '+items['image']);
         HomeApi homeapi = HomeApi(
           key: items['key'],
           governorateName: items['governorate_name'],

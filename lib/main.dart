@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task/screens/home.dart';
-import 'package:task/screens/thirdpage.dart';
+//import 'package:task/screens/thirdpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,9 +17,9 @@ class MyApp extends StatelessWidget {
       ),
       home: 
       Home(),
-       routes: {
-         ThirdPage.id: (context) => ThirdPage(),
-       },
+      //  routes: {
+      //    ThirdPage.id: (context) => ThirdPage(),
+      //  },
        //ThirdPage(),
     );
   }
